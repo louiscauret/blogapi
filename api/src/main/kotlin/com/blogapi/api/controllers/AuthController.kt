@@ -20,19 +20,19 @@ class AuthController(private val userService: UserService) {
     @PostMapping("register")
     fun register(@RequestBody body: RegisterDTO): ResponseEntity<User>{
         val user = User()
-        user.name = body.name
+        user.firstName = body.firstName
+        user.lastName = body.lastName
         user.email = body.email
         user.password = body.password
+        user.avatar = "${body.firstName}+${body.lastName}"
+
         return ResponseEntity.ok(this.userService.save(user))
     }
 
     @PostMapping("login")
     fun login(@RequestBody body: LoginDTO, response: HttpServletResponse): ResponseEntity<Any> {
         val user = this.userService.findByEmail(body.email)
-
-        if (user == null){
-            return ResponseEntity.badRequest().body(Message("User not found"))
-        }
+                ?: return ResponseEntity.badRequest().body(Message("User not found"))
 
         if (!user.comparePassword(body.password)){
             return ResponseEntity.badRequest().body(Message("Invalid Password"))

@@ -2,6 +2,9 @@ package com.blogapi.api.models
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import java.io.File
+import java.net.URL
+import java.nio.file.Paths
 import javax.persistence.*
 
 @Entity
@@ -11,7 +14,10 @@ class User {
     var id: Int = 0
 
     @Column
-    var name: String = ""
+    var firstName: String = ""
+
+    @Column
+    var lastName: String = ""
 
     @Column(unique = true)
     var email: String = ""
@@ -28,4 +34,27 @@ class User {
     fun comparePassword(password: String): Boolean{
         return BCryptPasswordEncoder().matches(password, this.password)
     }
+
+    @Column(nullable = true)
+    var avatar = ""
+        get() = field
+        set(value) {
+            val host = "https://eu.ui-avatars.com/api/"
+
+            val url = URL("$host?name=$value")
+
+            val dir = Paths.get(System.getProperty("user.dir"))
+            val fileName = "${System.currentTimeMillis()}-$value-image.png"
+            val file = File("$dir/images/$fileName")
+            file.createNewFile()
+
+            val connection = url.openConnection()
+            connection.doInput = true
+            connection.connect()
+
+            val content = url.readBytes()
+
+            file.writeBytes(content)
+            field = file.absolutePath
+        }
 }
