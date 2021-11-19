@@ -1,4 +1,4 @@
-package com.blogapi.api.mail
+package com.blogapi.api.services
 
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
