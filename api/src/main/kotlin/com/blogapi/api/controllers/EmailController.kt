@@ -1,7 +1,7 @@
 package com.blogapi.api.controllers
 
 import com.blogapi.api.mail.EmailRequest
-import com.blogapi.api.mail.EmailSenderService
+import com.blogapi.api.services.EmailSenderService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
