@@ -5,6 +5,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	kotlin("jvm") version "1.5.31"
 	kotlin("plugin.spring") version "1.5.31"
+	kotlin("plugin.serialization") version "1.6.0"
 }
 
 group = "com.blogapi"
@@ -33,6 +34,11 @@ dependencies {
 	testImplementation("org.springframework.security:spring-security-test")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	implementation("io.jsonwebtoken:jjwt:0.9.1")
+	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
+	implementation("io.springfox:springfox-swagger-ui:3.0.0")
+	implementation("io.springfox:springfox-boot-starter:3.0.0")
+	implementation("io.springfox:springfox-swagger2:3.0.0")
+	implementation("io.springfox:springfox-bean-validators:3.0.0")
 }
 
 tasks.withType<KotlinCompile> {
