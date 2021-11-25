@@ -8,7 +8,7 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
-class ArticleMessage {
+class Commentaries {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var idMessage: Int = 0
@@ -36,5 +36,5 @@ class ArticleMessage {
 
     @ManyToOne
     @JoinColumn(name="idUser", nullable=false)
-    var author: Users = Users()
+    var author: Users? = Users()
 }
