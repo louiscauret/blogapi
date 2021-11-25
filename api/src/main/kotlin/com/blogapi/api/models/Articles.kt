@@ -16,24 +16,28 @@ class Articles {
     var idArticle: Int = 0
 
     @Column
-    @ApiModelProperty(notes = "Provided title", required = true)
+    @ApiModelProperty(notes = "Title of article", required = true)
     var title = ""
 
     @ManyToOne
     @JoinColumn(name="idUser", nullable=false)
-    var author: Users = Users()
+    @ApiModelProperty(notes = "Author of article", required = true)
+    var author: Users? = Users()
 
     @OneToMany(mappedBy = "article")
-    val commentary: List<ArticleMessage> = ArrayList()
+    val commentary: List<Commentaries> = ArrayList()
 
     @Column
+    @ApiModelProperty(notes = "Text of article", required = true)
     var text = ""
 
     @Column
+    @ApiModelProperty(notes = "Category of article", required = true)
     var category = ""
 
     @Column
     @Type(type = "date")
+    @ApiModelProperty(notes = "Date of creation of article", required = true)
     @JsonFormat
     (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     var creationDate: Date = Date(0L)

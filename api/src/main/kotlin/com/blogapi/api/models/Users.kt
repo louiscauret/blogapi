@@ -1,6 +1,7 @@
 package com.blogapi.api.models
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import io.swagger.annotations.ApiModelProperty
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import java.io.File
 import java.net.URL
@@ -14,15 +15,19 @@ class Users {
     var idUser: Int = 0
 
     @Column
+    @ApiModelProperty(notes = "First name of user", required = true)
     var firstName: String = ""
 
     @Column
+    @ApiModelProperty(notes = "Last name of user", required = true)
     var lastName: String = ""
 
     @Column(unique = true)
+    @ApiModelProperty(notes = "Email of user", required = true)
     var email: String = ""
 
     @Column
+    @ApiModelProperty(notes = "Password of user encrypted", required = true)
     var password: String = ""
         @JsonIgnore
         get() = field
@@ -36,6 +41,7 @@ class Users {
     }
 
     @Column(nullable = true)
+    @ApiModelProperty(notes = "Avatar of user auto generate with first name and last name", required = true)
     var avatar = ""
         get() = field
         set(value) {
@@ -61,6 +67,6 @@ class Users {
     @OneToMany(targetEntity = Articles::class, mappedBy = "author")
     private val articles: List<Articles> = ArrayList()
 
-    @OneToMany(targetEntity = ArticleMessage::class, mappedBy = "author")
-    private val messages: List<ArticleMessage> = ArrayList()
+    @OneToMany(targetEntity = Commentaries::class, mappedBy = "author")
+    private val messages: List<Commentaries> = ArrayList()
 }
