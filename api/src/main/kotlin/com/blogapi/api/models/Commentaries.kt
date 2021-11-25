@@ -32,7 +32,7 @@ class Commentaries {
 
     @ManyToOne
     @JoinColumn(name="idArticle", nullable=false)
-    var article: Articles = Articles()
+    var article: Articles? = Articles()
 
     @ManyToOne
     @JoinColumn(name="idUser", nullable=false)
