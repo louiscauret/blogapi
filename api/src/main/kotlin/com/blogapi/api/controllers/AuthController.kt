@@ -3,6 +3,7 @@ package com.blogapi.api.controllers
 import com.blogapi.api.dtos.LoginDTO
 import com.blogapi.api.dtos.Message
 import com.blogapi.api.dtos.RegisterDTO
+import com.blogapi.api.dtos.UpdateUsersDTO
 import com.blogapi.api.models.Users
 import com.blogapi.api.services.UserService
 import io.jsonwebtoken.Jwts
@@ -14,9 +15,12 @@ import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletResponse
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("api/users")
 class AuthController(private val userService: UserService) {
 
+    /**
+     * Create User
+     */
     @PostMapping("register")
     fun register(@RequestBody body: RegisterDTO): ResponseEntity<Users>{
         val user = Users()
@@ -28,6 +32,39 @@ class AuthController(private val userService: UserService) {
 
         return ResponseEntity.ok(this.userService.save(user))
     }
+
+    /**
+     * Get All Users
+     */
+    @GetMapping
+    fun getAll(): ResponseEntity<MutableIterable<Users>> {
+        return ResponseEntity.ok(this.userService.findAll())
+    }
+
+    /**
+     * Get User by ID
+     */
+    @GetMapping("/{userId}")
+    fun getById(@PathVariable userId:Int): ResponseEntity<Users?> {
+        return ResponseEntity.ok(this.userService.getById(userId))
+    }
+
+    /**
+     * Update User by ID
+     */
+    @PutMapping
+    fun update(@RequestBody body: UpdateUsersDTO): ResponseEntity<Users> {
+        return ResponseEntity.ok(this.userService.updateUserEmail(body.id, body.email))
+    }
+
+    /**
+     * Delete User by ID
+     */
+    @DeleteMapping("/{userId}")
+    fun delete(@PathVariable userId: Int): ResponseEntity<Any> {
+        return ResponseEntity.ok(this.userService.delete(userId))
+    }
+
 
     @PostMapping("login")
     fun login(@RequestBody body: LoginDTO, response: HttpServletResponse): ResponseEntity<Any> {
