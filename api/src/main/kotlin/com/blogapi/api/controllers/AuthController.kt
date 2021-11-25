@@ -3,7 +3,7 @@ package com.blogapi.api.controllers
 import com.blogapi.api.dtos.LoginDTO
 import com.blogapi.api.dtos.Message
 import com.blogapi.api.dtos.RegisterDTO
-import com.blogapi.api.models.User
+import com.blogapi.api.models.Users
 import com.blogapi.api.services.UserService
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletResponse
 class AuthController(private val userService: UserService) {
 
     @PostMapping("register")
-    fun register(@RequestBody body: RegisterDTO): ResponseEntity<User>{
-        val user = User()
+    fun register(@RequestBody body: RegisterDTO): ResponseEntity<Users>{
+        val user = Users()
         user.firstName = body.firstName
         user.lastName = body.lastName
         user.email = body.email

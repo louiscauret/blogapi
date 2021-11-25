@@ -8,7 +8,7 @@ import java.nio.file.Paths
 import javax.persistence.*
 
 @Entity
-class User {
+class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var idUser: Int = 0
@@ -58,6 +58,9 @@ class User {
             field = file.absolutePath
         }
 
-    @OneToMany(targetEntity = Article::class, mappedBy = "author")
-    private val articles: List<Article> = ArrayList()
+    @OneToMany(targetEntity = Articles::class, mappedBy = "author")
+    private val articles: List<Articles> = ArrayList()
+
+    @OneToMany(targetEntity = ArticleMessage::class, mappedBy = "author")
+    private val messages: List<ArticleMessage> = ArrayList()
 }

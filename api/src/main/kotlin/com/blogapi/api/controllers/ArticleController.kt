@@ -1,7 +1,7 @@
 package com.blogapi.api.controllers
 
 import com.blogapi.api.dtos.ArticleDTO
-import com.blogapi.api.models.Article
+import com.blogapi.api.models.Articles
 import com.blogapi.api.services.ArticleService
 import com.blogapi.api.services.UserService
 import io.jsonwebtoken.Jwts
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("api/articles")
 class ArticleController(private val articleService: ArticleService, private val userService: UserService) {
 
-    @PostMapping("create")
+    @PostMapping()
     fun create(@RequestBody body: ArticleDTO, @CookieValue("jwt") jwt: String?): ResponseEntity<Any> {
-        val art = Article()
+        val art = Articles()
         val bodyJwt = Jwts.parser().setSigningKey("secret").parseClaimsJws(jwt).body
         val user = this.userService.getById(bodyJwt.issuer.toInt())
         art.author = user

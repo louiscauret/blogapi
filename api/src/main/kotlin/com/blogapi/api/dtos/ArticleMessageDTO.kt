@@ -4,6 +4,6 @@ import java.util.*
 
 class ArticleMessageDTO {
     val text = ""
-    val author = ""
-    val date: Date? = null
+    val articleId = 0
+    //val author = ""
 }

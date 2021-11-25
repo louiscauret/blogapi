@@ -7,16 +7,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.persistence.*
 
+@Entity
 class ArticleMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: Int = 0
+    var idMessage: Int = 0
 
     @Column
     var text = ""
-
-    @Column
-    var author = ""
 
     @Column
     @Type(type = "date")
@@ -31,4 +29,12 @@ class ArticleMessage {
             val tml = date.time
             field = java.sql.Date(tml)
         }
+
+    @ManyToOne
+    @JoinColumn(name="idArticle", nullable=false)
+    var article: Articles = Articles()
+
+    @ManyToOne
+    @JoinColumn(name="idUser", nullable=false)
+    var author: Users = Users()
 }

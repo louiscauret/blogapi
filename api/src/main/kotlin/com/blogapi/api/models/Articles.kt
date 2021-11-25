@@ -9,7 +9,7 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
-class Article {
+class Articles {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,7 +21,10 @@ class Article {
 
     @ManyToOne
     @JoinColumn(name="idUser", nullable=false)
-    var author: User = User()
+    var author: Users = Users()
+
+    @OneToMany(mappedBy = "article")
+    val commentary: List<ArticleMessage> = ArrayList()
 
     @Column
     var text = ""
