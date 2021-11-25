@@ -38,7 +38,7 @@ class AuthController(private val userService: UserService) {
             return ResponseEntity.badRequest().body(Message("Invalid Password"))
         }
 
-        val issuer = user.id.toString()
+        val issuer = user.idUser.toString()
 
         val jwt = Jwts.builder()
             .setIssuer(issuer)

@@ -11,7 +11,7 @@ import javax.persistence.*
 class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: Int = 0
+    var idUser: Int = 0
 
     @Column
     var firstName: String = ""
@@ -57,4 +57,7 @@ class User {
             file.writeBytes(content)
             field = file.absolutePath
         }
+
+    @OneToMany(targetEntity = Article::class, mappedBy = "author")
+    private val articles: List<Article> = ArrayList()
 }
