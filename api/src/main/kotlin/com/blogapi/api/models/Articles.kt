@@ -1,6 +1,8 @@
 package com.blogapi.api.models
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonFormat
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import io.swagger.annotations.ApiModelProperty
 import org.hibernate.annotations.Type
 import java.sql.Date
@@ -19,12 +21,14 @@ class Articles {
     @ApiModelProperty(notes = "Title of article", required = true)
     var title = ""
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @JsonBackReference
     @JoinColumn(name="idUser", nullable=false)
     @ApiModelProperty(notes = "Author of article", required = true)
     var author: Users? = Users()
 
-    @OneToMany(mappedBy = "article")
+    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @JsonManagedReference
     val commentary: List<Commentaries> = ArrayList()
 
     @Column

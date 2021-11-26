@@ -1,6 +1,8 @@
 package com.blogapi.api.models
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import io.swagger.annotations.ApiModelProperty
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import java.io.File
@@ -64,9 +66,11 @@ class Users {
             field = file.absolutePath
         }
 
-    @OneToMany(targetEntity = Articles::class, mappedBy = "author")
+    @OneToMany(targetEntity = Articles::class, mappedBy = "author", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @JsonManagedReference
     private val articles: List<Articles> = ArrayList()
 
-    @OneToMany(targetEntity = Commentaries::class, mappedBy = "author")
+    @OneToMany(targetEntity = Commentaries::class, mappedBy = "author", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @JsonManagedReference
     private val messages: List<Commentaries> = ArrayList()
 }

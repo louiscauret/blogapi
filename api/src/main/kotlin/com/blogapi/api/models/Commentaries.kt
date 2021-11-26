@@ -1,5 +1,6 @@
 package com.blogapi.api.models
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonFormat
 import org.hibernate.annotations.Type
 import java.sql.Date
@@ -30,11 +31,13 @@ class Commentaries {
             field = java.sql.Date(tml)
         }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @JsonBackReference
     @JoinColumn(name="idArticle", nullable=false)
     var article: Articles? = Articles()
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @JsonBackReference
     @JoinColumn(name="idUser", nullable=false)
     var author: Users? = Users()
 }
