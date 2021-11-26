@@ -23,7 +23,8 @@ class AuthController {
     lateinit var service: UserService
 
     @PostMapping("login")
-    fun login(@RequestBody body: LoginDTO, response: HttpServletResponse): ResponseEntity<Any> {
+    fun login(@RequestBody body: LoginDTO,
+              response: HttpServletResponse): ResponseEntity<Any> {
         val user = this.service.findByEmail(body.email)
                 ?: return ResponseEntity.badRequest().body(Message("User not found"))
 
@@ -45,22 +46,6 @@ class AuthController {
 
         return ResponseEntity.ok(Message("Success"))
     }
-
-//    //authentification
-//    @GetMapping("user")
-//    fun user(@CookieValue("jwt") jwt: String?): ResponseEntity<Any> {
-//        try {
-//            if (jwt == null) {
-//                return ResponseEntity.status(401).body(Message("Unauthenticated"))
-//            }
-//
-//            val body = Jwts.parser().setSigningKey("secret").parseClaimsJws(jwt).body
-//
-//            return ResponseEntity.ok(this.service.getById(body.issuer.toInt()))
-//        } catch (e: Exception){
-//            return ResponseEntity.status(401).body(Message("Unauthenticated"))
-//        }
-//    }
 
     @PostMapping("logout")
     fun logout(response: HttpServletResponse): ResponseEntity<Any> {
