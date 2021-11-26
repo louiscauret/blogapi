@@ -6,4 +6,5 @@ import org.springframework.data.repository.CrudRepository
 
 interface UserRepository: CrudRepository<Users, Int> {
     fun findByEmail(email: String): Users?
+    fun findByFirstName(name: String): Users?
 }
