@@ -21,14 +21,14 @@ class Commentaries {
     @Type(type = "date")
     @JsonFormat
         (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-    var creationDate: java.sql.Date = Date(0L)
+    var creationDate: Date = Date(0L)
         get() = field
         set(value) {
             val df = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
             df.timeZone = TimeZone.getDefault()
             val date = Calendar.getInstance().time
             val tml = date.time
-            field = java.sql.Date(tml)
+            field = Date(tml)
         }
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
