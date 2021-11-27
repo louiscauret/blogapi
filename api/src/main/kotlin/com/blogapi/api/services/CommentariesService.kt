@@ -6,6 +6,7 @@ import com.blogapi.api.repositories.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import java.text.SimpleDateFormat
 
 @Service
 class CommentariesService {
@@ -44,5 +45,10 @@ class CommentariesService {
     fun getByAuthor(name: String?): List<Commentaries?>? {
         val mUser = name?.let { repositoryUser.findByFirstName(it) }
         return mUser?.let { repository.findByAuthor(it) }
+    }
+
+    fun getByDate(date: String?): List<Commentaries?>? {
+        val mDate = SimpleDateFormat("dd-MM-yyyy").parse(date)
+        return repository.findByCreationDate(mDate)
     }
 }
