@@ -1,7 +1,9 @@
 package com.blogapi.api.repositories
 
 import com.blogapi.api.models.Commentaries
-import org.springframework.data.jpa.repository.JpaRepository
+import com.blogapi.api.models.Users
+import org.springframework.data.repository.CrudRepository
 
-interface CommentariesRepository: JpaRepository<Commentaries, Int> {
+interface CommentariesRepository: CrudRepository<Commentaries, Int> {
+    fun findByAuthor(author: Users): List<Commentaries?>
 }
