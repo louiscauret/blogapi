@@ -19,9 +19,6 @@ class ArticleController {
     @Autowired
     lateinit var articleService: ArticleService
 
-    @Autowired
-    lateinit var userService: UserService
-
     /**
      * Get All Article
      */
@@ -60,16 +57,7 @@ class ArticleController {
     @PostMapping()
     fun create(@RequestBody body: ArticleDTO,
                @CookieValue("jwt") jwt: String?): ResponseEntity<Any> {
-        val art = Articles()
-        val bodyJwt = Jwts.parser().setSigningKey("secret").parseClaimsJws(jwt).body
-        val user = userService.getById(bodyJwt.issuer.toInt())
-        art.author = user
-        art.text = body.text
-        art.title = body.title
-        art.category = body.category
-        art.creationDate = java.sql.Date(0L)
-
-        return ResponseEntity.ok(articleService.save(art))
+        return ResponseEntity.ok(articleService.save(body, jwt))
     }
 
 }

@@ -1,5 +1,6 @@
 package com.blogapi.api.services
 
+import com.blogapi.api.dtos.RegisterDTO
 import com.blogapi.api.models.Users
 import com.blogapi.api.repositories.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,7 +15,14 @@ class UserService {
     @Autowired
     lateinit var repository: UserRepository
 
-    fun save(user: Users): Users {
+    fun save(body: RegisterDTO): Users {
+        val user = Users()
+        user.firstName = body.firstName
+        user.lastName = body.lastName
+        user.email = body.email
+        user.password = body.password
+        user.avatar = "${body.firstName}+${body.lastName}"
+
         return repository.save(user)
     }
 

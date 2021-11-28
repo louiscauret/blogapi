@@ -1,8 +1,10 @@
 package com.blogapi.api.services
 
+import com.blogapi.api.dtos.CommentariesDTO
 import com.blogapi.api.models.Commentaries
 import com.blogapi.api.repositories.CommentariesRepository
 import com.blogapi.api.repositories.UserRepository
+import io.jsonwebtoken.Jwts
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -17,9 +19,23 @@ class CommentariesService {
     @Autowired
     lateinit var repositoryUser: UserRepository
 
+    @Autowired
+    lateinit var userService: UserService
 
-    fun save(message: Commentaries): Commentaries {
-        return this.repository.save(message)
+    @Autowired
+    lateinit var articleService: ArticleService
+
+    fun save(body: CommentariesDTO, jwt: String?): Commentaries {
+        val com = Commentaries()
+        val bodyJwt = Jwts.parser().setSigningKey("secret").parseClaimsJws(jwt).body
+        val user = userService.getById(bodyJwt.issuer.toInt())
+        val article = articleService.getById(body.articleId)
+        com.text = body.text
+        com.author = user
+        com.article = article
+        com.creationDate = java.sql.Date(0L)
+
+        return this.repository.save(com)
     }
 
     fun findAll(): MutableIterable<Commentaries> {

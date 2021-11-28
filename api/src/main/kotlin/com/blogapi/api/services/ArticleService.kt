@@ -1,8 +1,10 @@
 package com.blogapi.api.services
 
+import com.blogapi.api.dtos.ArticleDTO
 import com.blogapi.api.models.Articles
 import com.blogapi.api.repositories.ArticleRepository
 import com.blogapi.api.repositories.UserRepository
+import io.jsonwebtoken.Jwts
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -20,8 +22,20 @@ class ArticleService {
     @Autowired
     lateinit var repositoryUser: UserRepository
 
-    fun save(article: Articles): Articles {
-        return repository.save(article)
+    @Autowired
+    lateinit var userService: UserService
+
+    fun save(body: ArticleDTO, jwt: String?): Articles {
+        val art = Articles()
+        val bodyJwt = Jwts.parser().setSigningKey("secret").parseClaimsJws(jwt).body
+        val user = userService.getById(bodyJwt.issuer.toInt())
+        art.author = user
+        art.text = body.text
+        art.title = body.title
+        art.category = body.category
+        art.creationDate = java.sql.Date(0L)
+
+        return repository.save(art)
     }
 
     fun getById(articleId: Int): Articles? {

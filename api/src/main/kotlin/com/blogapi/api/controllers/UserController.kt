@@ -20,14 +20,7 @@ class UserController {
      */
     @PostMapping
     fun create(@RequestBody body: RegisterDTO): ResponseEntity<Users> {
-        val user = Users()
-        user.firstName = body.firstName
-        user.lastName = body.lastName
-        user.email = body.email
-        user.password = body.password
-        user.avatar = "${body.firstName}+${body.lastName}"
-
-        return ResponseEntity.ok(this.service.save(user))
+        return ResponseEntity.ok(service.save(body))
     }
 
     /**
@@ -35,7 +28,7 @@ class UserController {
      */
     @GetMapping
     fun getAll(): ResponseEntity<MutableIterable<Users>> {
-        return ResponseEntity.ok(this.service.findAll())
+        return ResponseEntity.ok(service.findAll())
     }
 
     /**
@@ -51,7 +44,7 @@ class UserController {
      */
     @PutMapping
     fun update(@RequestBody body: UpdateUsersDTO): ResponseEntity<Users> {
-        return ResponseEntity.ok(this.service.updateUserEmail(body.id, body.email))
+        return ResponseEntity.ok(service.updateUserEmail(body.id, body.email))
     }
 
     /**
@@ -59,6 +52,6 @@ class UserController {
      */
     @DeleteMapping("/{userId}")
     fun delete(@PathVariable userId: Int): ResponseEntity<Any> {
-        return ResponseEntity.ok(this.service.delete(userId))
+        return ResponseEntity.ok(service.delete(userId))
     }
 }

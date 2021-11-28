@@ -63,15 +63,6 @@ class CommentariesController {
     @PostMapping()
     fun create(@RequestBody body: CommentariesDTO,
                @CookieValue("jwt") jwt: String?): ResponseEntity<Any> {
-        val com = Commentaries()
-        val bodyJwt = Jwts.parser().setSigningKey("secret").parseClaimsJws(jwt).body
-        val user = userService.getById(bodyJwt.issuer.toInt())
-        val article = articleService.getById(body.articleId)
-        com.text = body.text
-        com.author = user
-        com.article = article
-        com.creationDate = java.sql.Date(0L)
-
-        return ResponseEntity.ok(commentariesService.save(com))
+        return ResponseEntity.ok(commentariesService.save(body, jwt))
     }
 }
