@@ -2,6 +2,7 @@ package com.blogapi.api.models
 
 import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import io.swagger.annotations.ApiModelProperty
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -67,10 +68,12 @@ class Users {
         }
 
     @OneToMany(targetEntity = Articles::class, mappedBy = "author", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    @JsonManagedReference
+//    @JsonManagedReference
+    @JsonIgnoreProperties("author")
     private val articles: List<Articles> = ArrayList()
 
     @OneToMany(targetEntity = Commentaries::class, mappedBy = "author", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    @JsonManagedReference
+//    @JsonManagedReference(value = "author")
+    @JsonIgnoreProperties("author")
     private val messages: List<Commentaries> = ArrayList()
 }
